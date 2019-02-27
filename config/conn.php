@@ -9,12 +9,10 @@
 
 	try
 	{
-		// Conectando
 		$pdo = new PDO($dsn, $usuario, $senha);
 	}
 	catch (PDOException $e)
 	{
-		// Se ocorrer algum erro na conexão
 		die($e->getMessage());
 	}
 

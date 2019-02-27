@@ -1,18 +1,15 @@
 <?php
 
   session_start();
-  include("conexao.php");
 
-  $nivel_acesso  = $_SESSION['nivel_acesso'];
   $secao_usuario = $_SESSION['usuario'];
+  $nivel_acesso = $_SESSION['nivel_acesso'];
 
-  if(!isset($_SESSION['usuario']) && (!isset($_SESSION['senha']))){
-      header("Location: menu.php");
+  if(!isset($secao_usuario) || $nivel_acesso != 1){
+    header("Location: menu.php");
   }
 
-  if($nivel_acesso != 1){
-    header("Location: menu_cliente.php");
-  }
+  include("conexao.php");
 
   $query = "Select status, sum(custo_total) as valores from pedido Group by status";
   $result = mysqli_query($conn, $query);

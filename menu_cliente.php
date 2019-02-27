@@ -2,7 +2,10 @@
 
     session_start();
 
-    if(!isset($_SESSION['usuario']) && !isset($_SESSION['senha'])){
+    $secao_usuario = $_SESSION['usuario'];
+    $nivel_acesso = $_SESSION['nivel_acesso'];
+
+    if(!isset($secao_usuario)){
         header("Location: menu.php");
     }
 
