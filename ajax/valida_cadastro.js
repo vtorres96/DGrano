@@ -1,9 +1,11 @@
 $(function ($) {
     $('#formulario_cadastro').on('submit', function () {
+        
         var formulario = $(this);
         var botao = $('#salvar_cadastro');
         var mensagem = $('#mensagem_cadastro');
         botao.button('loading');
+
         $(this).ajaxSubmit({
             dataType: 'json',
             success: function (retorno) {

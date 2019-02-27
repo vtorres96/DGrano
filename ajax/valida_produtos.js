@@ -1,11 +1,11 @@
 $(function ($) {
-    $('#formulario_contato').on('submit', function () {
+    $('.formulario').on('submit', function () {
 
         var formulario = $(this)
-        var botao = $('#salvar_contato')
-        var mensagem = $('#mensagem_contato')
+        var botao = $('#salvar')
+        var mensagem = $('#mensagem')
         botao.button('loading')
-        
+
         $(this).ajaxSubmit({
             dataType: 'json',
             success: function (retorno) {
@@ -20,10 +20,10 @@ $(function ($) {
             },
             error: function () {
                 mensagem.attr('class', 'alert alert-danger')
-                mensagem.html('Oops, ocorreu um erro')
+                mensagem.html('Talvez você já tenha adicionado este produto.')
                 botao.button('reset')
             }
         })
         return false
     })
-})
+})   

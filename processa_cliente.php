@@ -1,6 +1,6 @@
-<?php session_start();  ?>
-
-<?php
+<?php 
+    
+    session_start();  
 
     if(!isset($_SESSION['usuario']) && (!isset($_SESSION['senha']))){	
         header("Location: menu.php");	
@@ -32,7 +32,7 @@
 
 	<body> <?php
         
-                if(isset($_POST['menu'])){
+                if(isset($_POST['menu_cliente'])){
         
                     if(mysqli_affected_rows($conn) != 0){
                         echo "
