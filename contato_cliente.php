@@ -90,6 +90,45 @@
 	    </div>
 </section>
 
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="exampleModalLabel">Alteração de Cadastro</h4>
+            </div>
+            <div class="modal-body">
+                <form method="POST" action="processa_cliente.php" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label class="control-label">Nome:</label>
+                        <input name="nome" type="text" class="form-control" value="<?= $usuario["nome"]; ?>">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label">Email:</label>
+                        <input name="email" type="text" class="form-control" value="<?= $usuario["email"] ?>">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label">Usuario:</label>
+                        <input name="usuario" type="text" class="form-control" value="<?= $usuario["usuario"] ?>">
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label">Senha:</label>
+                        <input name="senha" type="text" class="form-control" value="<?= $usuario["senha"] ?>">
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
+                        <input type="submit" class="btn btn-danger" value="Alterar" name="menu_cliente">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 <?php require_once("includes/footer.php"); ?>
 
 <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
