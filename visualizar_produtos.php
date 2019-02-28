@@ -48,14 +48,14 @@ require_once("includes/navbar.php");
         <form method="POST" action="salvar_pedido.php" class="formulario">
             <div id="mensagem"></div>
             
-            <input type="hidden" name="cliente" value="<?php echo $secao_usuario; ?>">
+            <input type="hidden" name="cliente" value="<?= $secao_usuario; ?>">
             <div class="col-lg-4">
-                <img style="width:75%;" src="imagem.php?id=<?php echo $produtos->id ?>" />
+                <img style="width:75%;" src="imagem.php?id=<?= $produtos->id ?>" />
                 <div class="caption">
-                    <input type="hidden" name="id" value="<?php echo $produtos->id ?>"> <br>
-                    <input type="hidden" name="codigo" value="<?php echo $produtos->codigo ?>"> <br>
-                    <strong>Descrição:</strong> <?php echo $produtos->descricao ?> <input type="hidden" name="descricao" value="<?php echo $produtos->descricao ?>">  <br>
-                    <strong>Preço: </strong>  R$ <strong style="font-size:25px;"><?php echo number_format($produtos->preco,2) ?></strong> <input type="hidden" name="preco" value="<?php echo $produto->preco ?>"> <br><br>
+                    <input type="hidden" name="id" value="<?= $produtos->id ?>"> <br>
+                    <input type="hidden" name="codigo" value="<?= $produtos->codigo ?>"> <br>
+                    <strong>Descrição:</strong> <?= $produtos->descricao ?> <input type="hidden" name="descricao" value="<?= $produtos->descricao ?>">  <br>
+                    <strong>Preço: </strong>  R$ <strong style="font-size:25px;"><?= number_format($produtos->preco,2) ?></strong> <input type="hidden" name="preco" value="<?php echo $produto->preco ?>"> <br><br>
                     <input type="hidden" name="status" value="">
                     <input type="submit" class="btn btn-primary" id="salvar" value="Adicionar ao Pedido" data-loading-text="Adicionando..." >
                 </div>
