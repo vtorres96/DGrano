@@ -130,7 +130,7 @@
 <script type="text/javascript" src="js/classie.js"></script>
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 <script src="http://malsup.github.io/min/jquery.form.min.js"></script>
-<script src="animate.js"></script>
+<script type="text/javascript" src="js/animate.js"></script>
 
 </body>
 </html>                     
