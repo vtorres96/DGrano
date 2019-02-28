@@ -1,26 +1,21 @@
 <?php
-// Incluindo arquivo de conexão
-require_once('config/conn.php');
 
-$id = $_GET['id'];
+    require_once('config/conn.php');
 
-// Selecionando fotos
-$stmt = $pdo->prepare('SELECT conteudo, tipo FROM produtos WHERE id = :id');
-$stmt->bindParam(':id', $id, PDO::PARAM_INT);
+    $id = $_GET['id'];
 
-// Se executado
-if ($stmt->execute())
-{
-    // Alocando foto
-    $foto = $stmt->fetchObject();
-    
-    // Se existir
-    if ($foto != null)
-    {
-        // Definindo tipo do retorno
-        header('Content-Type: '. $foto->tipo);
-        
-        // Retornando conteudo
-        echo $foto->conteudo;
+
+    $stmt = $pdo->prepare('SELECT conteudo, tipo FROM produtos WHERE id = :id');
+    $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+
+
+    if ($stmt->execute()){
+
+        $foto = $stmt->fetchObject();
+
+        if ($foto != null){
+            header('Content-Type: '. $foto->tipo);
+            echo $foto->conteudo;
+        }
     }
-}
+?>

@@ -66,10 +66,7 @@
                                 <div class="col-lg-6">
                                     <div id="mensagem_contato"></div>
 
-                                    <div class="form-group">
-                                        <label>Nome: </label>
-                                        <input class="form-control" style="background:#ffffffd6;" type="text" name="nome" id="nome" value="" required>
-                                    </div>
+                                    <input type="hidden" class="form-control" style="background:#ffffffd6;"  name="nome" id="nome" value="<?= $usuario["nome"] ?>" required>
 
                                     <div class="form-group">
                                         <label>E-mail: </label>

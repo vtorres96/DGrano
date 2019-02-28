@@ -3,8 +3,8 @@
 	$id = mysqli_real_escape_string($conn, $_POST['id']);
 	$nome = mysqli_real_escape_string($conn, $_POST['nome']);
 	$email = mysqli_real_escape_string($conn, $_POST['email']);
-        $usuario = mysqli_real_escape_string($conn, $_POST['usuario']);
-        $senha = mysqli_real_escape_string($conn, $_POST['senha']);
+	$usuario = mysqli_real_escape_string($conn, $_POST['usuario']);
+	$senha = mysqli_real_escape_string($conn, $_POST['senha']);
 	
 	$result_cursos = "UPDATE cadastro SET nome = '$nome', email = '$email', usuario = '$usuario', senha = '$senha' WHERE id = '$id'";	
 	$resultado_cursos = mysqli_query($conn, $result_cursos);	

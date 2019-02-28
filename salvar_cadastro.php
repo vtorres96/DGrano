@@ -19,7 +19,6 @@
 
         $stmt = $pdo->prepare('INSERT INTO cadastro (nome, email, usuario, senha, nivel_acesso) VALUES (:nome, :email, :usuario, :senha, :nivel_acesso)');
 
-        // Definindo parâmetros
         $stmt->bindParam(':nome', $nome, PDO::PARAM_STR);
         $stmt->bindParam(':email', $email, PDO::PARAM_STR);
         $stmt->bindParam(':usuario', $usuario, PDO::PARAM_STR);
@@ -28,7 +27,6 @@
 
         // Executando e exibindo resultado
         echo ($stmt->execute()) ? retorno('Usuário Cadastrado com Sucesso', true) : retorno($stmt->errorInfo());
-
     }
 
 ?>
