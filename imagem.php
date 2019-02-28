@@ -4,14 +4,14 @@
 
     $id = $_GET['id'];
 
+    $query = $pdo->prepare('SELECT conteudo, tipo FROM produtos WHERE id = :id');
+    $query->execute([
+        ":id" => $id
+    ]);
 
-    $stmt = $pdo->prepare('SELECT conteudo, tipo FROM produtos WHERE id = :id');
-    $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+    if ($query->execute()){
 
-
-    if ($stmt->execute()){
-
-        $foto = $stmt->fetchObject();
+        $foto = $query->fetchObject();
 
         if ($foto != null){
             header('Content-Type: '. $foto->tipo);
