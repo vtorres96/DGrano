@@ -11,22 +11,31 @@
     $senha = $_POST['senha'];
     $nivel_acesso = 0;
 
-    $resulta = $pdo->query("SELECT * FROM cadastro WHERE usuario = '$usuario'");
+    $query = $pdo->prepare("SELECT * FROM cadastro WHERE usuario = :usuario");
+    $query->execute([
+        ":usuario" => $usuario
+    ]);
 
-    if ($resulta->rowCount()) {
-        echo ($resulta->execute()) ? retorno('Login Já Existente', true) : retorno($resulta->errorInfo());
+    $cadastrado = $query->fetch(PDO::FETCH_ASSOC);
+
+    if ($cadastrado) {
+        echo retorno('Login Já Existente', true);
     } else {
 
-        $stmt = $pdo->prepare('INSERT INTO cadastro (nome, email, usuario, senha, nivel_acesso) VALUES (:nome, :email, :usuario, :senha, :nivel_acesso)');
+        $query = $pdo->prepare('INSERT INTO cadastro (nome, email, usuario, senha, nivel_acesso) VALUES (:nome, :email, :usuario, :senha, :nivel_acesso)');
+        $salvou = $query->execute([
+            ':nome' => $nome,
+            ':email' => $email,
+            ':usuario' => $usuario,
+            ':senha' => $senha,
+            ':nivel_acesso' => $nivel_acesso
+        ]);
 
-        $stmt->bindParam(':nome', $nome, PDO::PARAM_STR);
-        $stmt->bindParam(':email', $email, PDO::PARAM_STR);
-        $stmt->bindParam(':usuario', $usuario, PDO::PARAM_STR);
-        $stmt->bindParam(':senha', $senha, PDO::PARAM_STR);
-        $stmt->bindParam(':nivel_acesso', $nivel_acesso, PDO::PARAM_INT);
-
-        // Executando e exibindo resultado
-        echo ($stmt->execute()) ? retorno('Usuário Cadastrado com Sucesso', true) : retorno($stmt->errorInfo());
+        if(isset($salvou) && $salvou === true){
+            echo retorno('Usuário Cadastrado com Sucesso', true);
+        } else {
+            echo retorno($salvou->errorInfo());
+        }
     }
 
 ?>
