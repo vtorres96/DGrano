@@ -47,7 +47,7 @@
                         <b>Treinamento</b> - Nossos sistemas são de fácil manuseio, entretanto, um treinamento inicial é fundamental para ele seja utilizado adequadamente - e nós fazemos isso.<br><br>
                         <b>Hardware</b> - Sem hardware de qualidade, nada funciona. Nós montamos computadores e fornecemos impressoras fiscais e não fiscais, leitores de código de barras, etc.Detalhes<br><br>
                         <b>Redes e Internet</b> - Cabeamento estruturado, Reorganização de cabeamento existente, Identificação e Reparo de problemas de lentidão e travamento na rede de dados. Detalhes<br><br>
-                        <b>Atendimento</b> - Aqui na NewOxxy você não fica na mão. Temos solidez, estrutura e uma equipe bem treinada para lhe atender.
+                        <b>Atendimento</b> - Aqui na DGrano você não fica na mão. Temos solidez, estrutura e uma equipe bem treinada para lhe atender.
 						</p>
                     </div>
                 </div>
