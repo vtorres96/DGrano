@@ -50,7 +50,7 @@
         <h6>A D'Grano® Panificadora tem o compromisso como uma de nossas filosofias, e com foco em atender a com empatia, proporcionando a sua preferência, e a nossa qualidade como indústria panificaçao e confeitaria.</h6>
         <div class="row">
             <figure class="col-lg-5 col-sm-4 wow fadeInLeft">
-                <img src="img/D-GRANO.png" style="width:75%;">
+                <img src="img/d-grano.png" style="width:75%;">
             </figure>
         	<div class="col-lg-7 col-sm-8 featured-work">
                 <div class="featured-box">
