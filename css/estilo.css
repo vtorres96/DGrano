@@ -6,3 +6,11 @@
 .pointer{
   cursor: pointer;
 }
+
+.myButton {
+  background:url(/img/trash.png) no-repeat;
+  cursor:pointer;
+  width: 40px;
+  height: 40px;
+  border: none;
+}
