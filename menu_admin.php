@@ -26,6 +26,22 @@
     require_once("includes/navbar.php"); 
 ?>
 
+<!--Inicio Nosso Software-->
+<section class="main-section alabaster" id="Software">
+	<div class="container">
+    <h2>Área administrativa</h2>
+		<h6>A D'Grano® Panificadora tem o compromisso de fornecer meios para que seus clientes possam ter uma gestão sistêmica e eficiente dos números de sua empresa.</h6>
+    	<div class="row">
+        	<div class="col-lg-7 col-sm-8 featured-work">
+              <div style="width:900px; background:rgba(251, 251, 251, 0.9);">
+                  <div id="piechart" style="width: 900px; height: 500px;"></div>
+              </div>
+            </div>
+        </div>
+	</div>
+</section>
+
+
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -64,21 +80,6 @@
         </div>
     </div>
 </div>
-
-<!--Inicio Nosso Software-->
-<section class="main-section alabaster" id="Software">
-	<div class="container">
-    <h2>Área administrativa</h2>
-		<h6>A D'Grano® Panificadora tem o compromisso de fornecer meios para que seus clientes possam ter uma gestão sistêmica e eficiente dos números de sua empresa.</h6>
-    	<div class="row">
-        	<div class="col-lg-7 col-sm-8 featured-work">
-              <div style="width:900px; background:rgba(251, 251, 251, 0.9);">
-                  <div id="piechart" style="width: 900px; height: 500px;"></div>
-              </div>
-            </div>
-        </div>
-	</div>
-</section>
 
 <?php require_once("includes/footer.php"); ?>
 

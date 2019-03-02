@@ -55,7 +55,7 @@ require_once("includes/navbar.php");
                     <input type="hidden" name="id" value="<?= $produtos->id ?>"> <br>
                     <input type="hidden" name="codigo" value="<?= $produtos->codigo ?>"> <br>
                     <strong>Descrição:</strong> <?= $produtos->descricao ?> <input type="hidden" name="descricao" value="<?= $produtos->descricao ?>">  <br>
-                    <strong>Preço: </strong>  R$ <strong style="font-size:25px;"><?= number_format($produtos->preco,2) ?></strong> <input type="hidden" name="preco" value="<?php echo $produto->preco ?>"> <br><br>
+                    <strong>Preço: </strong>  R$ <strong style="font-size:25px;"><?= number_format($produtos->preco,2) ?></strong> <input type="hidden" name="preco" value="<?= $produtos->preco ?>"> <br><br>
                     <input type="hidden" name="status" value="">
                     <input type="submit" class="btn btn-primary" id="salvar" value="Adicionar ao Pedido" data-loading-text="Adicionando..." >
                 </div>
