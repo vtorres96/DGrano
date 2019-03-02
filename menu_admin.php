@@ -10,10 +10,9 @@
     }
 
     require_once("config/conn.php");
-    require_once("conexao.php");
 
-    $query = ("SELECT status, SUM(custo_total) AS valores FROM pedido GROUP BY status");
-    $result = mysqli_query($conn, $query);
+    $query = $pdo->query("SELECT status, SUM(custo_total) AS valores FROM pedido GROUP BY status");
+    $rows = $query->fetchAll(PDO::FETCH_ASSOC);
 
 ?>
 
@@ -85,25 +84,23 @@
 
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">
-  google.charts.load('current', {'packages':['corechart']});
-  google.charts.setOnLoadCallback(drawChart);
-  function drawChart(){
-      var data = google.visualization.arrayToDataTable([
-          ['Status', 'Valores'],
-          <?php
-            while($row = mysqli_fetch_array($result))  {
-                echo "['".$row["status"]."', ".number_format($row["valores"],2)."],";
-            }
-          ?>
-      ]);
-      var options = {
-          title: 'Gráfico de Vendas - Pedidos Finalizados e em Aberto',
-          is3D:true,
-          pieHole: 0.4
-      };
-      var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-      chart.draw(data, options);
-  }
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+    function drawChart(){
+        var data = google.visualization.arrayToDataTable([
+        ['Status', 'Valores'],
+        <?php foreach($rows as $row): ?>
+            ['<?= $row["status"] ?>', <?= number_format($row["valores"],2)?>],    
+        <?php endforeach; ?>
+        ]);
+        var options = {
+            title: 'Gráfico de Vendas - Pedidos Finalizados e em Aberto',
+            is3D:true,
+            pieHole: 0.4
+        };
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+        chart.draw(data, options);
+    }
 </script>
 <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
 <script type="text/javascript" src="js/jquery-scrolltofixed.js"></script>
