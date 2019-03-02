@@ -9,15 +9,17 @@
     $email = $_POST['email'];
     $mensagem = $_POST['mensagem'];
 
-    // Preparando comando
-    $stmt = $pdo->prepare('INSERT INTO contato (nome, email, mensagem) VALUES (:nome, :email, :mensagem)');
+    $query = $pdo->prepare('INSERT INTO contato (nome, email, mensagem) VALUES (:nome, :email, :mensagem)');
+    $enviou = $query->execute([
+        ":nome" => $nome,
+        ":email" => $email,
+        ":mensagem" => $mensagem
+    ]);
 
-    // Definindo parâmetros
-    $stmt->bindParam(':nome', $nome, PDO::PARAM_STR);
-    $stmt->bindParam(':email', $email, PDO::PARAM_STR);
-    $stmt->bindParam(':mensagem', $mensagem, PDO::PARAM_STR);
-
-    // Executando e exibindo resultado
-    echo ($stmt->execute()) ? retorno('Mensagem Enviada Com Sucesso', true) : retorno($stmt->errorInfo());
-
+    if(isset($enviou) && $enviou === true){
+        echo retorno('Mensagem Enviada Com Sucesso', true);
+    } else {
+        echo retorno($enviou->errorInfo());
+    }
+    
 ?>
