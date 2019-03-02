@@ -4,8 +4,7 @@
     require_once('config/conn.php');
     
     // Funções de utilidade
-    require_once('funcs/util.php');
-   
+    require_once('funcs/util.php');  
         
     $id = $_POST['id'];
     $cliente = $_POST['cliente'];
@@ -15,26 +14,34 @@
     $preco = $_POST['preco'];
     $status = $_POST['status'];
 
-    $resulta = $pdo->query("SELECT * FROM pedido WHERE cliente = '$cliente' AND codigo = '$codigo' AND descricao = '$descricao' AND status = '' ");
+    $query = $pdo->prepare("SELECT * FROM pedido WHERE cliente = :cliente AND codigo = :codigo AND descricao = :descricao AND status = :status ");
+    $query->execute([
+        ":cliente" => $cliente,
+        ":codigo" => $codigo,
+        ":descricao" => $descricao,
+        ":status" => ' '
+    ]);
 
-    if ($resulta->rowCount()) {
-        echo ($stmt->execute()) ? retorno('Este Produto Já Foi Adicionado.', true) : retorno($stmt->errorInfo());
-    } else {
+    $pedidos = $query->fetchAll(PDO::FETCH_ASSOC);
 
-        // Preparando comando
-        $stmt = $pdo->prepare("INSERT INTO pedido (cliente, data_venda, codigo, descricao, preco_venda, status) VALUES (:cliente, :data_venda, :codigo, :descricao, :preco, :status)");
+    if(!$pedidos){
 
-        // Definindo parâmetros
-        $stmt->bindParam(':cliente', $cliente, PDO::PARAM_STR);
-        $stmt->bindParam(':data_venda', $data_venda, PDO::PARAM_STR);
-        $stmt->bindParam(':codigo', $codigo, PDO::PARAM_STR);
-        $stmt->bindParam(':descricao', $descricao, PDO::PARAM_STR);
-        $stmt->bindParam(':preco', $preco, PDO::PARAM_INT);
-        $stmt->bindParam(':status', $status, PDO::PARAM_STR);
+        $query = $pdo->prepare("INSERT INTO pedido (cliente, data_venda, codigo, descricao, preco_venda, status) VALUES (:cliente, :data_venda, :codigo, :descricao, :preco, :status)");
 
-        // Executando e exibindo resultado
-        echo ($stmt->execute()) ? retorno('Produto: '.$descricao.' Adicionado.', true) : retorno($stmt->errorInfo());
+        $salvou = $query->execute([
+            ':cliente' => $cliente,
+            ':data_venda' => $data_venda,
+            ':codigo' => $codigo,
+            ':descricao' => $descricao,
+            ':preco' => $preco,
+            ':status' => $status
+        ]);
 
+        if(isset($salvou) && $salvou === true){
+            echo retorno('Produto: ' . $descricao . ' adicionado', true);
+        } else {
+            echo retorno($salvou->errorInfo());
+        }
     }
 
 ?>

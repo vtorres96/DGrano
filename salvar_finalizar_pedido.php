@@ -1,11 +1,23 @@
 <?php   
     
+    
+    session_start();
+
+    $secao_usuario = $_SESSION['usuario'];
+    $nivel_acesso = $_SESSION['nivel_acesso'];
+
+    if(!isset($secao_usuario)){
+        header("Location: menu.php");
+    }
+
+    require_once("config/conn.php");
+    
     include("conexao.php"); 
 
 	if (isset($_POST['finalizar'])){
                    
-        $id = $_POST['id'];
-        $cliente = $_POST['cliente'];
+        $id = $_REQUEST['id'];
+        $cliente = $_REQUEST['cliente'];
         $codigo = array_filter($_REQUEST['codigo']);
         $descricao = $_REQUEST['descricao'];
         $preco = $_REQUEST['preco_venda'];	

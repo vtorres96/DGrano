@@ -17,6 +17,16 @@
     ]);
 
     $usuario = $query->fetch(PDO::FETCH_ASSOC);
+
+    if(isset($_POST['deletar'])){
+
+        $id = $_POST['id'];
+
+        $query = $pdo->prepare("DELETE FROM contato WHERE id = :id");
+        $deletou = $query->execute([
+            ":id" => $id
+        ]);        
+    }
     
     $query = $pdo->query("SELECT * FROM contato ORDER BY id DESC");
     $contatos = $query->fetchAll(PDO::FETCH_ASSOC);
@@ -39,6 +49,12 @@
     </div>  
     <br><br>     
     
+    <?php if(isset($deletou) && $deletou === true): ?>
+            <div class="alert alert-success">
+                Mensagem excluída com sucesso
+            </div>
+    <?php endif; ?>
+
     <div class="table-responsive">
         <table class="table table-bordered table-hover">
             <thead>
@@ -59,7 +75,10 @@
                             <td><?= $contato['email']; ?></td>
                             <td><?= $contato['mensagem']; ?></td>
                             <td><button type="button" class="btn btn-xs btn-primary" data-toggle="modal" data-target="#myModal<?= $contato['id']; ?>">Visualizar</button></td>
-                            <td><a href="processa_apagar.php?id=<?php echo $contato['id']; ?>"><button type="button" class="btn btn-xs btn-danger">Apagar</button></a></td>
+                            <form method="post" enctype="multipart/form-data">
+                                <input type="hidden" name="id" value="<?= $contato['id'] ?>">
+                                <td><input type="submit" name="deletar" class="btn btn-xs btn-danger" value="Apagar" title="Apagar"></td>
+                            </form>
                         </tr>
 
                         <div class="modal fade" id="myModal<?= $contato['id']; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

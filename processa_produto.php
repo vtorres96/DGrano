@@ -3,7 +3,7 @@
 	$id = mysqli_real_escape_string($conn, $_POST['id']);
 	$codigo = mysqli_real_escape_string($conn, $_POST['codigo']);
 	$descricao = mysqli_real_escape_string($conn, $_POST['descricao']);
-        $preco = mysqli_real_escape_string($conn, $_POST['preco']);
+    $preco = mysqli_real_escape_string($conn, $_POST['preco']);
 	
 	$result_cursos = "UPDATE produtos SET codigo = '$codigo', descricao = '$descricao', preco = '$preco' WHERE id = '$id'";	
 	$resultado_cursos = mysqli_query($conn, $result_cursos);	
