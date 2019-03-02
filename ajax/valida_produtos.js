@@ -1,5 +1,5 @@
 $(function ($) {
-    $('.formulario').on('submit', function () {
+    $('#formulario').on('submit', function () {
 
         var formulario = $(this)
         var botao = $('#salvar')
@@ -20,10 +20,10 @@ $(function ($) {
             },
             error: function () {
                 mensagem.attr('class', 'alert alert-danger')
-                mensagem.html('Talvez você já tenha adicionado este produto.')
+                mensagem.html('Oops, ocorreu um erro')
                 botao.button('reset')
             }
         })
         return false
     })
-})   
+})

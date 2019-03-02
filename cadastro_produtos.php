@@ -118,9 +118,7 @@
 </div>
 
 <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
-<script type="text/javascript" src="ajax/valida_cadastro.js"></script>
-<script type="text/javascript" src="ajax/valida_contato.js"></script>
-<script type="text/javascript" src="ajax/valida_cadastroProdutos.js"></script>
+<script type="text/javascript" src="ajax/valida_produtos.js"></script>
 <script type="text/javascript" src="js/jquery-scrolltofixed.js"></script>
 <script type="text/javascript" src="js/jquery.easing.1.3.js"></script>
 <script type="text/javascript" src="js/jquery.isotope.js"></script>

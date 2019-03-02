@@ -42,28 +42,27 @@
 <div class="container">		
     <h1>Finalize Seu Pedido</h1>	
     <br><br>     
-
-    <form method="POST" action="salvar_finalizar_pedido.php" class="">
-        <div class="panel-body">
-            <div class="table-responsive">
-            <?php if (isset($deletou) && $deletou === true): ?>
-                <div class="alert alert-success">
-                    O produto foi excluído do pedido
-                </div>
-            <?php endif; ?>
-                <table class="table table-bordered table-hover">
-                    <thead>
-                        <tr>                                            
-                            <th>Cliente</th>
-                            <th>Código Produto</th>
-                            <th>Descrição</th>
-                            <th>Preço</th>
-                            <th>Quantidade</th>
-                            <th>Custo Total Produto</th>
-                            <th>Excluir</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+    <div class="panel-body">
+        <div class="table-responsive">
+        <?php if (isset($deletou) && $deletou === true): ?>
+            <div class="alert alert-success">
+                O produto foi excluído do pedido
+            </div>
+        <?php endif; ?>
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>                                            
+                        <th>Cliente</th>
+                        <th>Código Produto</th>
+                        <th>Descrição</th>
+                        <th>Preço</th>
+                        <th>Quantidade</th>
+                        <th>Custo Total Produto</th>
+                        <th>Excluir</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <form method="POST" action="salvar_finalizar_pedido.php" class="">
                         <?php	
                             $query = $pdo->prepare("SELECT * FROM pedido WHERE status = :status AND cliente = :cliente ORDER BY id");
                             $query->execute([
@@ -75,35 +74,35 @@
 
                             foreach($produtos as $produto): ?>	
                                 <tr>
-                                     <input type="hidden" name="id[]" value="<?= $produto['id'] ?>">
-                                     <input type="hidden" name="codigo[]" value="<?= $produto['codigo'] ?>">
-                                     <input type="hidden" name="descricao[]" value="<?= $produto['descricao'] ?>">
-                                     <input type="hidden" id="preco_venda" name="preco_venda[]" value="<?= $produto['preco_venda'] ?>" special="price">
-                                     <input type="hidden" name="status[]" value="FIN">
-                                     
-                                     <td><?= $produto['cliente'] ?></td>
-                                     <td><?= $produto['codigo'] ?></td>
-                                     <td><?= $produto['descricao'] ?></td>
-                                     <td><?= $produto['preco_venda'] ?></td>
-                                     <td><input type="text" id="quantidade" name="quantidade[]" value="1" autofocus special="quantity"></td>
-                                     <td><input type="text" id="custo_total" name="custo_total[]" style="border:none;"></td>
-                                     <form method="post" enctype="multipart/form-data">
+                                    <input type="hidden" name="id[]" value="<?= $produto['id'] ?>">
+                                    <input type="hidden" name="codigo[]" value="<?= $produto['codigo'] ?>">
+                                    <input type="hidden" name="descricao[]" value="<?= $produto['descricao'] ?>">
+                                    <input type="hidden" id="preco_venda" name="preco_venda[]" value="<?= $produto['preco_venda'] ?>" special="price">
+                                    <input type="hidden" name="status[]" value="FIN">
+                                    
+                                    <td><?= $produto['cliente'] ?></td>
+                                    <td><?= $produto['codigo'] ?></td>
+                                    <td><?= $produto['descricao'] ?></td>
+                                    <td><?= $produto['preco_venda'] ?></td>
+                                    <td><input type="text" id="quantidade" name="quantidade[]" value="1" autofocus special="quantity"></td>
+                                    <td><input type="text" id="custo_total" name="custo_total[]" style="border:none;"></td>
+                                    <form method="post" enctype="multipart/form-data">
                                         <input type="hidden" name="id_prod" value="<?= $produto['id'] ?>">
                                         <td><input type="submit" name="deletar" class="myButton" value="" title="Excluir"></td>
-                                     </form>
-                                 </tr>
+                                    </form>
+                                </tr>
                         <?php
                             endforeach;
                         ?>				
-                    </tbody>
-                </table>
-                Valor Total R$: <span id="PrintSoma">0.00</span>
-            </div>
-            <br>		
-            <input type="submit" class="btn btn-primary" value="Finalizar Pedido" id="finalizar" name="finalizar">
+                    </form>
+                </tbody>
+            </table>
+            Valor Total R$: <span id="PrintSoma">0.00</span>
         </div>
-    </form>
-    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>          
+        <br>		
+        <input type="submit" class="btn btn-primary" value="Finalizar Pedido" id="finalizar" name="finalizar">
+    </div>
+    <br><br><br><br>         
 </div>
 
 <?php require_once("includes/footer.php"); ?>
