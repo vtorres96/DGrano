@@ -17,6 +17,22 @@
     ]);
 
     $usuario = $query->fetch(PDO::FETCH_ASSOC);
+
+    if(isset($_POST['alterar'])){
+
+        $nome = $_POST['nome'];
+        $email = $_POST['email'];
+        $usuario = $_POST['usuario'];
+        $senha = $_POST['senha'];
+
+        $query = $pdo->prepare("UPDATE cadastro SET nome = :nome , email = :email, senha = :senha WHERE usuario = :usuario");
+        $alterou = $query->execute([
+            ":usuario" => $secao_usuario,
+            ":nome" => $nome,
+            ":email" => $email,
+            ":senha" => $senha
+        ]);        
+    }    
     
     $query = $pdo->prepare("SELECT * FROM pedido WHERE status = :fin AND cliente = :secao_usuario ORDER BY id");
     $query->execute([
@@ -35,49 +51,54 @@
     $active = "cliente";
     require_once("includes/navbar.php"); 
 ?>
-        <div class="container">
-			
-            <h1>Visualize seus pedidos</h1>
-            <br>
-            <div class="form-group col-lg-8">
-                <label>Estão listados abaixo somente pedidos que foram finalizados.</label>
-            </div>  
-            <br><br>     
-            
-            <div class="table-responsive">
-                <table class="table table-bordered table-hover">
-                    <thead>
-                        <tr>                                            
-                            <th>Cliente</th>
-                            <th>Data Venda</th>
-                            <th>Produto</th>
-                            <th>Preço</th>
-                            <th>Quantidade</th>
-                            <th>Valor Pago</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php 
-                            foreach($pedidos as $pedido): 
-                        ?>
-                                <tr>
-                                    <td><?= $pedido['cliente'] ?></td>
-                                    <td><input type="date" readonly style="border:none;" name="data_venda" value="<?= $pedido["data_venda"] ?>"></td>
-                                    <td><?= $pedido['descricao'] ?></td>
-                                    <td>R$  <?= $pedido['preco_venda'] ?></td>
-                                    <td><?= $pedido['quantidade'] ?></td>
-                                    <td>R$  <?= $pedido['custo_total'] ?></td>
-                                    <td><?= $pedido['status'] ?></td>
-                                </tr>
-                        <?php 
-                            endforeach; 
-                        ?>			
-                    </tbody>
-                </table>
-            </div>
+<div class="container">			
+    <h1>Visualize seus pedidos</h1>
+    <br>
+    <div class="form-group col-lg-8">
+        <p>Estão listados abaixo somente pedidos que foram finalizados.</p>
+    </div>  
+    <br><br>     
+
+    <?php if(isset($alterou) && $alterou === true): ?>
+        <div class="alert alert-success">
+            Usuário alterado com sucesso
         </div>
-        <br><br><br><br><br><br><br><br>
+    <?php endif; ?>
+    
+    <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>                                            
+                    <th>Cliente</th>
+                    <th>Data Venda</th>
+                    <th>Produto</th>
+                    <th>Preço</th>
+                    <th>Quantidade</th>
+                    <th>Valor Pago</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php 
+                    foreach($pedidos as $pedido): 
+                ?>
+                        <tr>
+                            <td><?= $pedido['cliente'] ?></td>
+                            <td><?= date('d-m-Y', strtotime($pedido["data_venda"])) ?></td>
+                            <td><?= $pedido['descricao'] ?></td>
+                            <td>R$  <?= $pedido['preco_venda'] ?></td>
+                            <td><?= $pedido['quantidade'] ?></td>
+                            <td>R$  <?= $pedido['custo_total'] ?></td>
+                            <td><?= $pedido['status'] ?></td>
+                        </tr>
+                <?php 
+                    endforeach; 
+                ?>			
+            </tbody>
+        </table>
+    </div>
+</div>
+<br><br><br><br><br><br><br><br>
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
     <div class="modal-dialog" role="document">
@@ -87,7 +108,8 @@
                 <h4 class="modal-title" id="exampleModalLabel">Alteração de Cadastro</h4>
             </div>
             <div class="modal-body">
-                <form method="POST" action="processa_cliente.php" enctype="multipart/form-data">
+                <form method="POST" enctype="multipart/form-data">
+                    
                     <div class="form-group">
                         <label class="control-label">Nome:</label>
                         <input name="nome" type="text" class="form-control" value="<?= $usuario["nome"]; ?>">
@@ -99,18 +121,13 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="control-label">Usuario:</label>
-                        <input name="usuario" type="text" class="form-control" value="<?= $usuario["usuario"] ?>">
-                    </div>
-
-                    <div class="form-group">
                         <label class="control-label">Senha:</label>
                         <input name="senha" type="text" class="form-control" value="<?= $usuario["senha"] ?>">
                     </div>
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
-                        <input type="submit" class="btn btn-danger" value="Alterar" name="menu_cliente">
+                        <button type="submit" class="btn btn-success" value="Alterar" name="alterar">Alterar</button>
                     </div>
                 </form>
             </div>
