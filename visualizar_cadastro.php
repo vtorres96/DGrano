@@ -17,9 +17,25 @@
     ]);
 
     $usuario = $query->fetch(PDO::FETCH_ASSOC);
-    
+
+    if(isset($_POST['alterar'])){
+
+        $nome = $_POST['nome'];
+        $email = $_POST['email'];
+        $usuario = $_POST['usuario'];
+        $senha = $_POST['senha'];
+
+        $query = $pdo->prepare("UPDATE cadastro SET nome = :nome , email = :email, senha = :senha WHERE usuario = :usuario");
+        $alterou = $query->execute([
+            ":usuario" => $secao_usuario,
+            ":nome" => $nome,
+            ":email" => $email,
+            ":senha" => $senha
+        ]);        
+    }
+
     $query = $pdo->query("SELECT * FROM cadastro ORDER BY id");
-    $usuarios = $query->fetchAll(PDO::FETCH_ASSOC);
+    $clientes = $query->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <?php require_once("includes/head.php"); ?>
@@ -35,10 +51,16 @@
     <h1>Visualize Usuários Cadastrados</h1>
     <br>
     <div class="form-group col-lg-8">
-        <label>Lista de usuários que estão cadastrados no sistema.</label>
+        <p>Lista de usuários que estão cadastrados no sistema.</p>
     </div>  
     <br><br>     
-    
+
+    <?php if(isset($alterou) && $alterou === true): ?>
+            <div class="alert alert-success">
+                Usuário alterado com sucesso
+            </div>
+    <?php endif; ?>
+
     <div class="table-responsive">
         <table class="table table-bordered table-hover">
             <thead>
@@ -48,22 +70,20 @@
                     <th>E-mail</th>
                     <th>Usuario</th>
                     <th>Senha</th>
-                    <th>Nível Acesso</th>
-                    <th>Alterar</th>
+                    <th>Nível de Acesso</th>
                 </tr>
             </thead>
             <tbody>
                 <?php 
-                    foreach($usuarios as $usuario): 
+                    foreach($clientes as $cliente): 
                 ?>
                         <tr>
-                            <td><?= $usuario['id']; ?></td>
-                            <td><?= $usuario['nome']; ?></td>
-                            <td><?= $usuario['email']; ?></td>
-                            <td><?= $usuario['usuario']; ?></td>
-                            <td><?= $usuario['senha']; ?></td>
-                            <td><?= $usuario['nivel_acesso']; ?></td>
-                            <td><button type="button" class="btn btn-xs btn-warning" data-toggle="modal" data-target="#exampleModal" data-whatever="<?= $usuario['id']; ?>" data-whatevernome="<?= $usuario['nome']; ?>"  data-whateveremail="<?= $usuario['email']; ?>" data-whateverusuario="<?= $usuario['usuario']; ?>" data-whateversenha="<?= $usuario['senha']; ?>">Alterar Cadastro</button></td>
+                            <td><?= $cliente['id']; ?></td>
+                            <td><?= $cliente['nome']; ?></td>
+                            <td><?= $cliente['email']; ?></td>
+                            <td><?= $cliente['usuario']; ?></td>
+                            <td><?= $cliente['senha']; ?></td>
+                            <td><?= $cliente['nivel_acesso']; ?></td>
                         </tr>
                 <?php 
                     endforeach; 
@@ -82,7 +102,8 @@
                 <h4 class="modal-title" id="exampleModalLabel">Alteração de Cadastro</h4>
             </div>
             <div class="modal-body">
-                <form method="POST" action="processa_cliente.php" enctype="multipart/form-data">
+                <form method="POST" enctype="multipart/form-data">
+                    
                     <div class="form-group">
                         <label class="control-label">Nome:</label>
                         <input name="nome" type="text" class="form-control" value="<?= $usuario["nome"]; ?>">
@@ -94,18 +115,13 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="control-label">Usuario:</label>
-                        <input name="usuario" type="text" class="form-control" value="<?= $usuario["usuario"] ?>">
-                    </div>
-
-                    <div class="form-group">
                         <label class="control-label">Senha:</label>
                         <input name="senha" type="text" class="form-control" value="<?= $usuario["senha"] ?>">
                     </div>
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
-                        <input type="submit" class="btn btn-danger" value="Alterar" name="menu_cliente">
+                        <button type="submit" class="btn btn-success" value="Alterar" name="alterar">Alterar</button>
                     </div>
                 </form>
             </div>

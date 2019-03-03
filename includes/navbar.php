@@ -27,8 +27,8 @@
             <li><a href="cadastro_produtos.php">Cadastrar Produtos</a></li>
             <li><a href="logoff.php">Sair</a></li>
             <li>
-                <a href="" title="Alterar Cadastro" data-toggle="modal" data-target="#exampleModal" data-whatever="<?= $usuario['id']; ?>" data-whatevernome="<?= $usuario['nome']; ?>"  data-whateveremail="<?= $usuario['email']; ?>" data-whateverusuario="<?= $usuario['usuario']; ?>" data-whateversenha="<?= $usuario['senha']; ?>">
-                    <i class="fa-user"></i> Administrador: <?php  echo $secao_usuario; ?>
+                <a href="" title="Alterar Cadastro" data-toggle="modal" data-target="#exampleModal">
+                    <i class="fa-user"></i> Administrador: <?= $secao_usuario; ?>
                 </a>
             </li>
         </ul>

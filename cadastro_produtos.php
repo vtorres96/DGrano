@@ -17,6 +17,23 @@
     ]);
 
     $usuario = $query->fetch(PDO::FETCH_ASSOC);
+    
+    if(isset($_POST['alterar'])){
+
+        $id = $_POST['id'];
+        $nome = $_POST['nome'];
+        $email = $_POST['email'];
+        $usuario = $_POST['usuario'];
+        $senha = $_POST['senha'];
+
+        $query = $pdo->prepare("UPDATE cadastro SET nome = :nome , email = :email, senha = :senha WHERE usuario = :usuario");
+        $alterou = $query->execute([
+            ":usuario" => $secao_usuario,
+            ":nome" => $nome,
+            ":email" => $email,
+            ":senha" => $senha
+        ]);        
+    }
 
     $query = $pdo->query("SELECT id, codigo, descricao, preco FROM produtos");
 
@@ -33,6 +50,13 @@
 
 <div class="container">
     <h1>Cadastro de Produtos</h1>
+    <br><br>
+
+    <?php if(isset($alterou) && $alterou === true): ?>
+            <div class="alert alert-success">
+                Usuário alterado com sucesso
+            </div>
+    <?php endif; ?>
 
     <form id="formulario" action="ajax/salvar.php" method="post">
 
@@ -86,7 +110,8 @@
                 <h4 class="modal-title" id="exampleModalLabel">Alteração de Cadastro</h4>
             </div>
             <div class="modal-body">
-                <form method="POST" action="processa_cliente.php" enctype="multipart/form-data">
+                <form method="POST" enctype="multipart/form-data">
+                    
                     <div class="form-group">
                         <label class="control-label">Nome:</label>
                         <input name="nome" type="text" class="form-control" value="<?= $usuario["nome"]; ?>">
@@ -98,18 +123,13 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="control-label">Usuario:</label>
-                        <input name="usuario" type="text" class="form-control" value="<?= $usuario["usuario"] ?>">
-                    </div>
-
-                    <div class="form-group">
                         <label class="control-label">Senha:</label>
                         <input name="senha" type="text" class="form-control" value="<?= $usuario["senha"] ?>">
                     </div>
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
-                        <input type="submit" class="btn btn-danger" value="Alterar" name="menu_cliente">
+                        <button type="submit" class="btn btn-success" value="Alterar" name="alterar">Alterar</button>
                     </div>
                 </form>
             </div>

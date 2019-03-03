@@ -11,6 +11,29 @@
 
     require_once("config/conn.php");
 
+    $query = $pdo->prepare("SELECT * FROM cadastro WHERE usuario = :secao_usuario");
+    $query->execute([
+        ":secao_usuario" => $secao_usuario
+    ]);
+
+    $usuario = $query->fetch(PDO::FETCH_ASSOC);
+
+    if(isset($_POST['alterar'])){
+
+        $nome = $_POST['nome'];
+        $email = $_POST['email'];
+        $usuario = $_POST['usuario'];
+        $senha = $_POST['senha'];
+
+        $query = $pdo->prepare("UPDATE cadastro SET nome = :nome , email = :email, senha = :senha WHERE usuario = :usuario");
+        $alterou = $query->execute([
+            ":usuario" => $secao_usuario,
+            ":nome" => $nome,
+            ":email" => $email,
+            ":senha" => $senha
+        ]);        
+    }
+
     $query = $pdo->query("SELECT status, SUM(custo_total) AS valores FROM pedido GROUP BY status");
     $rows = $query->fetchAll(PDO::FETCH_ASSOC);
 
@@ -25,21 +48,28 @@
     require_once("includes/navbar.php"); 
 ?>
 
-<!--Inicio Nosso Software-->
-<section class="main-section alabaster" id="Software">
-	<div class="container">
-    <h2>Área administrativa</h2>
-		<h6>A D'Grano® Panificadora tem o compromisso de fornecer meios para que seus clientes possam ter uma gestão sistêmica e eficiente dos números de sua empresa.</h6>
-    	<div class="row">
-        	<div class="col-lg-7 col-sm-8 featured-work">
-              <div style="width:900px; background:rgba(251, 251, 251, 0.9);">
-                  <div id="piechart" style="width: 900px; height: 500px;"></div>
-              </div>
-            </div>
-        </div>
-	</div>
-</section>
+<div class="container">
+    <section class="main-section alabaster" id="Software">
+        <h2>Área administrativa</h2>
+        <br><br>
 
+            <?php if(isset($alterou) && $alterou === true): ?>
+                    <div class="alert alert-success">
+                        Usuário alterado com sucesso
+                    </div>
+            <?php endif; ?>
+
+            <p>A D'Grano® Panificadora tem o compromisso de fornecer meios para que seus clientes possam ter uma gestão sistêmica e eficiente dos números de sua empresa.</p>
+            
+            <div class="row">
+                <div class="col-lg-7 col-sm-8 featured-work">
+                <div style="width:900px; background:rgba(251, 251, 251, 0.9);">
+                    <div id="piechart" style="width: 900px; height: 500px;"></div>
+                </div>
+                </div>
+            </div>
+    </section>
+</div>
 
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
     <div class="modal-dialog" role="document">
@@ -49,7 +79,8 @@
                 <h4 class="modal-title" id="exampleModalLabel">Alteração de Cadastro</h4>
             </div>
             <div class="modal-body">
-                <form method="POST" action="processa_cliente.php" enctype="multipart/form-data">
+                <form method="POST" enctype="multipart/form-data">
+                    
                     <div class="form-group">
                         <label class="control-label">Nome:</label>
                         <input name="nome" type="text" class="form-control" value="<?= $usuario["nome"]; ?>">
@@ -61,18 +92,13 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="control-label">Usuario:</label>
-                        <input name="usuario" type="text" class="form-control" value="<?= $usuario["usuario"] ?>">
-                    </div>
-
-                    <div class="form-group">
                         <label class="control-label">Senha:</label>
                         <input name="senha" type="text" class="form-control" value="<?= $usuario["senha"] ?>">
                     </div>
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary" data-dismiss="modal">Cancelar</button>
-                        <input type="submit" class="btn btn-danger" value="Alterar" name="menu_cliente">
+                        <button type="submit" class="btn btn-success" value="Alterar" name="alterar">Alterar</button>
                     </div>
                 </form>
             </div>
