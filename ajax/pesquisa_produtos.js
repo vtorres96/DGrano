@@ -3,7 +3,7 @@ $(document).ready(function(){
          let retorno = $(this).val()  
          if(retorno != '')  {  
             $.ajax({  
-                    url:"/funcs/search.php",  
+                    url:"../funcs/search.php",  
                     method:"POST",  
                     data:{retorno:retorno},  
                     success:function(data) {
