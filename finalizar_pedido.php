@@ -18,16 +18,41 @@
 
     $usuario = $query->fetch(PDO::FETCH_ASSOC);
 
-    if(isset($_POST['deletar'])){
-
-        $id = $_POST['id_prod'];
-
-        $query = $pdo->prepare("DELETE FROM pedido WHERE id = :id");
+    if ($_GET && $_GET["id"]) {
+        $query = $pdo->prepare('DELETE FROM pedido WHERE id = :id');
+        
         $deletou = $query->execute([
-            ":id" => $id
-        ]);        
+            ":id" => $_GET["id"]
+        ]);
     }
 
+	if (isset($_POST['finalizar'])){
+                   
+        $id = $_REQUEST['id'];
+        $codigo = array_filter($_REQUEST['codigo']);
+        $descricao = $_REQUEST['descricao'];
+        $preco = $_REQUEST['preco_venda'];	
+        $quantidade = $_REQUEST['quantidade'];
+        $custo_total = $_REQUEST['custo_total'];
+        $status = $_REQUEST['status'];
+        
+        $query = $pdo->prepare("SELECT * FROM pedido WHERE cliente = :cliente"); 
+        $query->execute([
+            ":cliente" => $secao_usuario
+        ]);
+        $pedidos = $query->fetchAll(PDO::FETCH_ASSOC);
+        
+        for($i = 0; $i < count($codigo); $i++)  {
+        
+            if($pedidos > $i){
+                $result = "UPDATE pedido set quantidade = '$quantidade[$i]', custo_total = '$custo_total[$i]', status = '$status[$i]' WHERE cliente = '$secao_usuario' AND id = '$id[$i]' ";
+            } else {
+                $result = "INSERT INTO pedido (cliente, data_venda, codigo, descricao, preco_venda, quantidade, custo_total, status) VALUES ('$secao_usuario', NOW(), '$codigo[$i]', '$descricao[$i]', '$preco[$i]', '$quantidade[$i]', '$custo_total[$i]', '$status[$i]')";
+            }     
+            $resultado = $pdo->query($result);             
+        }
+        header("Location: visualizar_pedidos.php");
+	}
 ?>
 
 <?php require_once("includes/head.php"); ?>
@@ -49,20 +74,20 @@
                 O produto foi excluído do pedido
             </div>
         <?php endif; ?>
-            <table class="table table-bordered table-hover">
-                <thead>
-                    <tr>                                            
-                        <th>Cliente</th>
-                        <th>Código Produto</th>
-                        <th>Descrição</th>
-                        <th>Preço</th>
-                        <th>Quantidade</th>
-                        <th>Custo Total Produto</th>
-                        <th>Excluir</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <form method="POST" action="salvar_finalizar_pedido.php" class="">
+            <form method="POST" class="">
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>                                            
+                            <th>Cliente</th>
+                            <th>Código Produto</th>
+                            <th>Descrição</th>
+                            <th>Preço</th>
+                            <th>Quantidade</th>
+                            <th>Custo Total Produto</th>
+                            <th>Excluir</th>
+                        </tr>
+                    </thead>
+                    <tbody>
                         <?php	
                             $query = $pdo->prepare("SELECT * FROM pedido WHERE status = :status AND cliente = :cliente ORDER BY id");
                             $query->execute([
@@ -86,21 +111,22 @@
                                     <td><?= $produto['preco_venda'] ?></td>
                                     <td><input type="text" id="quantidade" name="quantidade[]" value="1" autofocus special="quantity"></td>
                                     <td><input type="text" id="custo_total" name="custo_total[]" style="border:none;"></td>
-                                    <form method="post" enctype="multipart/form-data">
-                                        <input type="hidden" name="id_prod" value="<?= $produto['id'] ?>">
-                                        <td><input type="submit" name="deletar" class="myButton" value="" title="Excluir"></td>
-                                    </form>
+                                    <td>
+                                        <a href="finalizar_pedido.php?id=<?= $produto["id"] ?>">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </a>
+                                    </td>
                                 </tr>
                         <?php
                             endforeach;
                         ?>				
-                    </form>
-                </tbody>
-            </table>
-            Valor Total R$: <span id="PrintSoma">0.00</span>
+                    </tbody>
+                </table>
+                Valor Total R$: <span id="PrintSoma">0.00</span><br><br>
+                <input type="submit" class="btn btn-primary" value="Finalizar Pedido" id="finalizar" name="finalizar">
+            </form>
         </div>
         <br>		
-        <input type="submit" class="btn btn-primary" value="Finalizar Pedido" id="finalizar" name="finalizar">
     </div>
     <br><br><br><br>         
 </div>

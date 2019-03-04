@@ -34,7 +34,7 @@
         ]);        
     }    
     
-    $query = $pdo->prepare("SELECT * FROM pedido WHERE status = :fin AND cliente = :secao_usuario ORDER BY id");
+    $query = $pdo->prepare("SELECT * FROM pedido WHERE status = :fin AND cliente = :secao_usuario ORDER BY id DESC");
     $query->execute([
         ":fin" => "FIN",
         ":secao_usuario" => $secao_usuario
