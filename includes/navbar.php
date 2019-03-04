@@ -42,9 +42,10 @@
         <div class="container">
             <ul class="main-nav">
                 <li><a href="contato_cliente.php">Enviar Mensagem</a></li>
-                <li><a href="visualizar_produtos.php">Visualizar Produtos</a></li>
+                <li><a href="visualizar_produtos.php">Produtos</a></li>
                 <li class="small-logo"><a href="menu_cliente.php"><img src="img/d-grano.png" style="width:60px;" alt=""></a></li>
-                <li><a href="visualizar_pedidos.php">Visualizar Pedidos</a></li>
+                <li><a href="visualizar_pedidos.php">Pedidos</a></li>
+                <li><a href="finalizar_pedido.php">Carrinho</a></li>
                 <li><a href="logoff.php">Sair</a></li>
                 <li><a href="">    </a></li>
                 <li>

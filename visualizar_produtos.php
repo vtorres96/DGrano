@@ -54,14 +54,10 @@ require_once("includes/navbar.php");
             </div>
     <?php endif; ?>
 
-    <div class="col-lg-9">
+    <div class="col-lg-11">
         <label for="ex1">Pesquisar</label>
         <input type="text" class="form-control" style="text-transform:uppercase" maxlength="20" id='descri' name="descri"><br><!-- Input Descrição -->
         <!--<div id="descriList"></div>-->
-    </div>
-
-    <div class="col-lg-3">
-        <a href="finalizar_pedido.php" class="btn btn-success" style="margin-top:25px;">Visualizar Pedido</a>
     </div>
 
     <br><br><br><br>
