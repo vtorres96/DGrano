@@ -56,8 +56,8 @@ require_once("includes/navbar.php");
 
     <div class="col-lg-11">
         <label for="ex1">Pesquisar</label>
-        <input type="text" class="form-control" style="text-transform:uppercase" maxlength="20" id='descri' name="descri"><br><!-- Input Descrição -->
-        <!--<div id="descriList"></div>-->
+            <input type="text" class="form-control" style="text-transform:uppercase" id='produto' name="produto"><br><!-- Input Descrição -->
+        <div id="produtoList"></div>
     </div>
 
     <br><br><br><br>
@@ -125,6 +125,7 @@ require_once("includes/navbar.php");
 
 <script type="text/javascript" src="js/jquery-3.1.1.min.js"></script>
 <script type="text/javascript" src="ajax/valida_carrinho.js"></script>
+<script type="text/javascript" src="ajax/pesquisa_produtos.js"></script>
 <script type="text/javascript" src="js/jquery-scrolltofixed.js"></script>
 <script type="text/javascript" src="js/jquery.easing.1.3.js"></script>
 <script type="text/javascript" src="js/jquery.isotope.js"></script>
@@ -132,7 +133,7 @@ require_once("includes/navbar.php");
 <script type="text/javascript" src="js/classie.js"></script>
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
 <script src="http://malsup.github.io/min/jquery.form.min.js"></script>
-<script type="text/javascript" src="js/animate.js"></script>
+<script type="text/javascript" src="/js/animate.js"></script>
 
 </body>
 </html>

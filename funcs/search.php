@@ -1,45 +1,33 @@
  <?php 
- 
-    include('conexao.php');
+     
+     session_start();
 
-     /* INICIO SUGESTÃO DE PRODUTOS PARA ORIENTAR USUARIO */
+     $secao_usuario = $_SESSION['usuario'];
+     $nivel_acesso = $_SESSION['nivel_acesso'];
+ 
+     if(!isset($secao_usuario)){
+         header("Location: menu.php");
+     }
+ 
+     require_once("../config/conn.php");
+
      if(isset($_POST["retorno"])){
          
-            $outputy = '';  
-            $query = "SELECT * FROM produtos WHERE descricao LIKE '%".$_POST["retorno"]."%'";  
-            $resulta = mysqli_query($conn, $query);  
-            $outputy = '<ul class="list-unstyled" id="xy">'; 
-          
-            if(mysqli_num_rows($resulta) > 0)  {  
-                 while($row = mysqli_fetch_array($resulta))  {  
-                      $outputy .= '<li>'.$row["descricao"].'</li>';  
-                 }  
-            }  
-            else  {  
-                  return json_encode(array( 'error' => mysqli_error($conn) )); 
-            } 
-            
-            $outputy .= '</ul>';  
-            echo $outputy;  
-     }  
-     /* FIM SUGESTÃO DE PRODUTOS PARA ORIENTAR USUARIO */
+          $output = '';  
+          $query = $pdo->query("SELECT * FROM produtos WHERE descricao LIKE '%" . $_POST["retorno"] . "%'");  
+          $produto = $query->fetch(PDO::FETCH_ASSOC);
+
+          $output = '<ul class="list-unstyled" id="xy">';   
+          foreach($produto as $prod)  {  
+               $output .= '<img style="width:75%;" src="./imagem.php?id=<?= $prod["id"] ?>">';
+               $output .= '<div class="caption">';
+                    $output .= '<strong>Descrição:</strong> <?= $prod["descricao"] ?><br>';
+                    $output .= '<strong>Preço: </strong>  R$ <strong style="font-size:25px;"><?= number_format($prod["preco"],2) ?></strong><br><br>';
+                    $output .= '<input type="submit" class="btn btn-primary" id="salvar" value="Adicionar ao Pedido" data-loading-text="Adicionando..." >';
+               $output .= '</div>';
+          }  
+          $output .= '</ul>';  
+          echo $output;  
+     } 
  
  ?>
-
-<div id="mensagem"></div>
-
-<input type="hidden" name="cliente" value="<?php echo $secao_usuario; ?>">
-<div class="col-lg-4">
-
-    <img style="width:75%;" src="imagem.php?id=<?php echo $row['id']; ?>" />
-
-    <div class="caption">
-            <input type="hidden" name="id" value="<?php echo $row['id']; ?>"> <br>
-            <input type="hidden" name="codigo" value="<?php echo $row['codigo']; ?>"> <br>
-            <strong>Descrição:</strong> <?php echo $row['descricao']; ?> <input type="hidden" name="descricao" value="<?php echo $row['descricao']; ?>">  <br>
-            <strong>Preço: </strong>  R$: <?php echo number_format($row['preco'],2) ?> <input type="hidden" name="preco" value="<?php echo $row['preco']; ?>"> <br><br>
-            <input type="hidden" name="status" value="">
-            <input type="submit" class="btn btn-primary" id="salvar" value="Adicionar ao Pedido" data-loading-text="Adicionando..." >
-    </div>
-    <br><br><br><br><br>
-</div>
