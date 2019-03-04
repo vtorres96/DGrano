@@ -56,7 +56,7 @@ require_once("includes/navbar.php");
 
     <div class="col-lg-11">
         <label for="ex1">Pesquisar</label>
-            <input type="text" class="form-control" style="text-transform:uppercase" id='produto' name="produto"><br><!-- Input Descrição -->
+            <input type="text" class="form-control" style="text-transform:uppercase" id='produto' name="produto" placeholder="Procure um produto pela descrição"><br><!-- Input Descrição -->
         <div id="produtoList"></div>
     </div>
 

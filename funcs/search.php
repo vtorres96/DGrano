@@ -13,7 +13,7 @@
 
      if(isset($_POST["retorno"])){
  
-          $query = $pdo->query("SELECT * FROM produtos WHERE descricao LIKE '%".$_POST["retorno"]."%'");  
+          $query = $pdo->query("SELECT * FROM produtos WHERE descricao LIKE '".$_POST["retorno"]."'");  
           $produto = $query->fetch(PDO::FETCH_ASSOC);
 
           if($produto){
